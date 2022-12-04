@@ -9,3 +9,40 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Exchange {
+  id    Int    @id @default(autoincrement())
+  name  String
+  ticks Tick[]
+}
+
+model Asset {
+  id              Int    @id @default(autoincrement())
+  name            String
+  symbol          String
+  type            String
+  baseAssetTicks  Tick[] @relation("BaseAssetTicks")
+  quoteAssetTicks Tick[] @relation("QuoteAssetTicks")
+}
+
+// TODO: Refactor price
+// model Price {
+// }
+
+model Tick {
+  id           Int      @id @default(autoincrement())
+  baseAsset    Asset    @relation(name: "BaseAssetTicks", fields: [baseAssetId], references: [id])
+  baseAssetId  Int
+  quoteAsset   Asset    @relation(name: "QuoteAssetTicks", fields: [quoteAssetId], references: [id])
+  quoteAssetId Int
+  currency     String
+  exchange     Exchange @relation(fields: [exchangeId], references: [id])
+  exchangeId   Int
+  openTime     DateTime
+  closeTime    DateTime
+  openPrice    Float
+  closePrice   Float
+  highPrice    Float
+  lowPrice     Float
+  volume       Float
+}
