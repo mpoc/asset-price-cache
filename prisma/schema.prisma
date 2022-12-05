@@ -31,7 +31,6 @@ model Tick {
   baseAssetId  Int
   quoteAsset   Asset    @relation(name: "QuoteAssetTicks", fields: [quoteAssetId], references: [id])
   quoteAssetId Int
-  currency     String
   exchange     Exchange @relation(fields: [exchangeId], references: [id])
   exchangeId   Int
   openTime     DateTime
