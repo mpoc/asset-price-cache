@@ -25,10 +25,6 @@ model Asset {
   quoteAssetTicks Tick[] @relation("QuoteAssetTicks")
 }
 
-// TODO: Refactor price
-// model Price {
-// }
-
 model Tick {
   id           Int      @id @default(autoincrement())
   baseAsset    Asset    @relation(name: "BaseAssetTicks", fields: [baseAssetId], references: [id])
